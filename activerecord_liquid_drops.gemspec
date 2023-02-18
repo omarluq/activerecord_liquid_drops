@@ -16,6 +16,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'activerecord'
   s.add_dependency 'liquid'
 
-  spec.add_development_dependency 'overcommit'
-  spec.add_development_dependency 'rubocop'
+  s.add_development_dependency 'overcommit'
+  s.add_development_dependency 'rubocop'
 end
