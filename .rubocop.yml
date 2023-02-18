@@ -1,0 +1,14 @@
+AllCops:
+  NewCops: disable
+Metrics/ParameterLists:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Layout/LineLength:
+  Enabled: false
+Naming/AccessorMethodName:
+  Enabled: false
