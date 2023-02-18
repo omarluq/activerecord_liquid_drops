@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.description                    = 'Adds support for creating liquid language drop classes for ActiveRecord models and assign drops as attributes'
   s.authors                        = ['Omar Luqman']
   s.files                          = ['lib/active_record_liquid_drops.rb']
-  s.homepage                       = 'https://rubygems.org/gems/activerecord_liquid_drops'
+  s.homepage                       = 'https://github.com/omarluq/activerecord_liquid_drops'
   s.license                        = 'MIT'
   s.metadata['homepage_uri']       = s.homepage
   s.metadata['source_code_uri']    = s.homepage
