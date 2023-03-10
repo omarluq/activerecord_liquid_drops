@@ -87,9 +87,13 @@ Note: by adding the user association as a drop on the Post class, the post will 
 ```
 ## Contributing
 Fork it ( https://github.com/omarluq/activerecord_liquid_drops/fork )
+
 Create your feature branch (git checkout -b my-new-feature)
+
 Commit your changes (git commit -am 'feat: add some feature')
+
 Push to the branch (git push origin my-new-feature)
+
 Create a new Pull Request
 
 ## License
