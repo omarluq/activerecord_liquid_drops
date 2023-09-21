@@ -25,11 +25,23 @@ module ActiverecordLiquidDrops
       nested? ? drops_from_nested_model : drops_from_model
     end
 
-    def drops_from_nested_model; end
+    def drops_from_nested_model
+      return if parent.const_defined?(drops_klass)
+
+      parent.const_set(drops_klass, klass_defention)
+    end
+
+    def parent
+      @parent ||= @model.responed_to?(:module_parent) ? @model.module_parent : @model.parent if nested?
+    end
 
     def drops_from_model
       return if Object.const_defined?(drops_klass)
 
+      Object.const_set(drops_klass, klass_defention)
+    end
+
+    def klass_defention
       # this method is a simple meta class builder used to build an un-instantiable class that can be used to expose safe attributes only to liquid templates
       # this buider handles un-nested models
       # the builder defines a class called ModelDrops
@@ -51,16 +63,15 @@ module ActiverecordLiquidDrops
       #     @resource[drop2]
       #   end
       #
-      # def self.drops_array
-      #   [:drop1, :drop2].freeze
-      # end
+      #   def self.drops_array
+      #     [:drop1, :drop2].freeze
+      #   end
       # end
       #
-
-      drops = @drops.map(&:to_sym)
-      klass_defention = Class.new(ActiverecordLiquidDrops::Base) do |klass|
-        klass.define_singleton_method(:drops_array) { drops.freeze }
-        drops.each do |drop|
+      drops_as_sym = @drops.map(&:to_sym)
+      Class.new(ActiverecordLiquidDrops::Base) do |klass|
+        klass.define_singleton_method(:drops_array) { drops_as_sym.freeze }
+        drops_as_sym.each do |drop|
           klass.define_method(drop) do
             value = @resource.public_send(drop)
             if value.is_a?(ActiveRecord::Base)
@@ -71,7 +82,6 @@ module ActiverecordLiquidDrops
           end
         end
       end
-      Object.const_set(drops_klass, klass_defention)
     end
   end
 end
