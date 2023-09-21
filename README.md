@@ -25,35 +25,34 @@ Or install it yourself as:
 $ gem install activerecord_liquid_drops
 ```
 
+
 ## Usage
 
-### Defining Drops
-We love the Liquid language and we love the Drops functionality! Exposing DB attributes to a templating engine safely is awesome; however, you can end up with a huge (and ugly) directory of Drops classes that are mostly boilerplate just to define those safe attributes.
-Activerecord_liquid_drops takes care of all the boilerplate by defining a Drops class for every Active Record model magically under the hood.
-Mmm, okay, but how do we define those safe attributes if the class is no longer accessible? Simple! Let's assume we have the following User model with 3 columns in the DB - first_name, last_name, and dob. We simply add a Drops block and pass it symbols of the columns we want to expose as safe attributes.
+### Streamlined Drops Definition
+
+Leveraging the Liquid language and its Drops functionality offers significant advantages in terms of templating engine flexibility. However, the management of numerous Drops classes, often containing boilerplate code, can become cumbersome and unwieldy. `activerecord_liquid_drops` addresses this by automating the creation of Drops classes for each Active Record model seamlessly.
+
+Defining safe attributes for exposure becomes straightforward. Take our User model with three database columns: `first_name`, `last_name`, and `dob`. To expose these as safe attributes, we simply add a Drops block and pass it symbols representing the columns.
 
 ```ruby
 class User < ActiveRecord::Base
   drops :first_name, :last_name, :dob
 end
-
 ```
 
-Mmm, okay, cool. But can I only make a DB column safe for the templating language? We can do a little more! Mmm, let's say I don't want to expose both first_name and last_name separately. That's just too much for the end user! I want to have a name function!
+Additionally, the Drops block can accept a method name defined on the model, providing even greater customization and control over your data presentation.
 
 ```ruby
 class User < ActiveRecord::Base
   drops :name, :dob
 
   def name
-   "#{first_name} #{last_name}"
+    "#{first_name} #{last_name}"
   end
 end
-
 ```
 
-What about associations? That works too! Let's add a posts table to our example with a title and a body columns.
-
+Associations are supported as well. If we add a `posts` table to our example with `title` and `body` columns, we can include them in the Drops.
 
 ```ruby
 class User < ActiveRecord::Base
@@ -61,7 +60,7 @@ class User < ActiveRecord::Base
   drops :name, :dob
 
   def name
-   "#{first_name} #{last_name}"
+    "#{first_name} #{last_name}"
   end
 end
 
@@ -70,21 +69,29 @@ class Post < ActiveRecord::Base
   drops :user, :title, :body
 end
 ```
-Note: by adding the user association as a drop on the Post class, the post will inherit the user drops, so the post drops would be `['title', 'body', 'user.name', 'user.age']`.
 
-### Helpers
-`all_drops` helper is added to your Active Record models as a class method. It returns an array of all the model drops.
-```irb
-=> Post.all_drops
-=> ['title', 'body', 'user.name', 'user.age']
-```
+It's important to note that by introducing the `user` association as a drop on the `Post` class, the `Post` drops will inherit those of the user, resulting in `['title', 'body', 'user.name', 'user.age']`.
 
-`drops` helper is added to your Active Record models as an instance method. It news up a Drops class instance for your current model instance.
-```irb
-=> post = Post.create!(title: 'New Post', body: 'I love Ruby!!!')
-=> post.drops
-=> PostDrops
-```
+### Useful Helpers
+
+We've included two helpful helpers:
+
+1. **`all_drops`**: This class method is added to your Active Record models, making it easy to retrieve an array containing all available Drops for the model.
+
+   ```ruby
+   => Post.all_drops
+   => ['title', 'body', 'user.name', 'user.age']
+   ```
+
+2. **`drops`**: This instance method is available in your Active Record models, allowing you to instantiate a Drops class instance for your current model instance.
+
+   ```ruby
+   => post = Post.create!(title: 'New Post', body: 'I hold an affinity for Ruby!!!')
+   => post.drops
+   => PostDrops
+   ```
+
+These features significantly simplify the management of Drops within your application, streamlining the process and enhancing flexibility.
 ## Contributing
 Fork it ( https://github.com/omarluq/activerecord_liquid_drops/fork )
 
