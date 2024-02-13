@@ -4,7 +4,7 @@ module ActiverecordLiquidDrops
   class Factory
     def initialize(model, drops = [])
       @model = model
-      @model_klass = model.class_name
+      @model_klass = model.to_s
       @drops = drops
       build_drops_klass
     end
