@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name                           = 'activerecord_liquid_drops'
-  s.version                        = '0.0.0'
+  s.version                        = '0.1.0'
   s.required_ruby_version          = '>= 2.6'
   s.summary                        = 'Liquid langaue drops for ActiveRecord models'
   s.description                    = 'Adds support for creating liquid language drop classes for ActiveRecord models and assign drops as attributes'

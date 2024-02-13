@@ -27,7 +27,7 @@ module ActiverecordLiquidDrops
     end
 
     def self.model_klass
-      class_name.gsub('Drops', '').constantize
+      to_s.gsub('Drops', '').constantize
     end
   end
 end
